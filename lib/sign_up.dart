@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_project/phone_number.dart';
 import 'package:firebase_project/toastmessege.dart';
 import 'package:flutter/material.dart';
 
@@ -133,11 +134,22 @@ class _Sign_upState extends State<Sign_up> {
               SizedBox(
                 height: mheight * .05,
               ),
-              Container( height: mheight * .05,
-                width: mwidth * .3,decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey),
-               child: TextButton(child: Text('go to login'),onPressed:()=>Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Login())))),
+              Row(
+                children: [SizedBox(width: mwidth*.05,),
+                  Container( height: mheight * .05,
+                    width: mwidth * .3,decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey),
+                   child: TextButton(child: Text('go to login',style: TextStyle(fontSize: 12,fontWeight:FontWeight.bold,color: Colors.black)),onPressed:()=>Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Login())))),
+                  SizedBox(width: mwidth*.3,),
+                  Container( height: mheight * .05,
+                    width: mwidth * .3,decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey),
+                    child: TextButton(child: Text('Sign with number',style: TextStyle(fontSize: 12,fontWeight:FontWeight.bold,color: Colors.black),),onPressed:()=>Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Signup_number())))),]
+              ),
+
+
             ],
           ),
         ),

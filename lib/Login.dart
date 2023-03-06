@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_project/forgot_password.dart';
 import 'package:firebase_project/toastmessege.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,11 @@ class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
 }
+
 TextEditingController email = TextEditingController();
 TextEditingController password = TextEditingController();
 FirebaseAuth auth = FirebaseAuth.instance;
+
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,8 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.grey,
                 ),
-                child: TextFormField(controller: email,
+                child: TextFormField(
+                  controller: email,
                   decoration: InputDecoration(
                       focusedBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
@@ -57,7 +61,8 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.grey,
                 ),
-                child: TextFormField(controller: password,
+                child: TextFormField(
+                  controller: password,
                   decoration: InputDecoration(
                       focusedBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
@@ -76,28 +81,61 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: mheight * .05,
             ),
-
-            Container(
-              height: mheight * .05,
-              width: mwidth * .3,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey),
-              child:TextButton(
-                onPressed: () { auth.signInWithEmailAndPassword(
-                    email: email.text, password: password.text)
-                    .then((value) => {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Home())),
-                  ToastMessage().toastmessage(message: 'welcome')
-                })
-                    .onError((error, stackTrace) => ToastMessage()
-                    .toastmessage(message: error.toString())); },
-                child: Text ('Login',style: TextStyle(color: Colors.black,
-                    fontSize: 15,fontWeight: FontWeight.w900
-
-                ),),
-              ),
-            )
+            Row(
+              children: [
+                Container(
+                  height: mheight * .05,
+                  width: mwidth * .3,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey),
+                  child: TextButton(
+                    onPressed: () {
+                      auth
+                          .signInWithEmailAndPassword(
+                              email: email.text, password: password.text)
+                          .then((value) => {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext a) => Home())),
+                                ToastMessage().toastmessage(message: 'welcome')
+                              })
+                          .onError((error, stackTrace) => ToastMessage()
+                              .toastmessage(message: error.toString()));
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                SizedBox(
+                  width: mwidth * .3,
+                ),
+                Container(
+                    height: mheight * .05,
+                    width: mwidth * .3,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey),
+                    child: TextButton(
+                        child: Text(
+                          'Forgott password',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (ctx) =>Forgot_password())))),
+              ],
+            ),
           ],
         ),
       ),
