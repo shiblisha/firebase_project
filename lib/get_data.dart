@@ -72,17 +72,22 @@ class _Get_dataState extends State<Get_data> {
                               GestureDetector(
                                 child: Text("Update"),
                                 onTap: () {
-                                  update.text=snapshot.child('title').value.toString();
-                                  ref.child(snapshot.child('id').toString()).update({'title': update.text})
-                                      .then((value) => ToastMessage()
-                                      .toastmessage(
-                                  message: 'UPDATED'))
+                                  update.text = snapshot
+                                      .child('title')
+                                      .value
+                                      .toString();
+                                  ref.child(snapshot.child('id').toString())
+                                      .update({'title': update.text})
+                                      .then((value) =>
+                                      ToastMessage()
+                                          .toastmessage(
+                                          message: 'UPDATED'))
                                       .onError((error, stackTrace) =>
-                                  ToastMessage().toastmessage(
-                                  message: error.toString
-                                  (
-                                  )
-                                  )
+                                      ToastMessage().toastmessage(
+                                          message: error.toString
+                                            (
+                                          )
+                                      )
                                   );
                                 },
                                 // },
@@ -101,10 +106,12 @@ class _Get_dataState extends State<Get_data> {
                     icon: Icon(Icons.update)),
                 trailing: IconButton(
                     onPressed: () {
+                      Dialogbox(Id: snapshot.child('id').toString(), title: snapshot.child('title').toString());
 
                     },
-                    icon: Icon(Icons.add))),
+                    icon: Icon(Icons.delete))),
           );
+
         }
 
       //     body: StreamBuilder(
@@ -208,4 +215,16 @@ class _Get_dataState extends State<Get_data> {
       // )
     ));
   }
+
+
+  Future<void> Dialogbox({required String Id, required String title}) async {  final newValue = TextEditingController();
+  newValue.text = title;  showDialog(
+      context: context,      builder: (BuildContext context) {
+    return AlertDialog(          title: Text('Update'),
+      content: TextFormField(            controller: newValue,
+      ),          actions: [
+        TextButton(onPressed: (){              ref.child(Id).update({'title':newValue.text.toLowerCase()});
+        }, child: Text('Update'))
+      ],        );
+  });}
 }
