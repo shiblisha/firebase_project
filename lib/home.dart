@@ -55,10 +55,11 @@ class _HomeState extends State<Home> {
               borderRadius: BorderRadius.circular(20), color: Colors.grey),
           child: TextButton(
             onPressed: (){
-              ref.child(DateTime.now().microsecondsSinceEpoch.toString()).set(
+              String id=DateTime.now().microsecondsSinceEpoch.toString();
+              ref.child(id).set(
                 {
                   'title':text1.text,
-                  'id':DateTime.now().microsecondsSinceEpoch.toString()
+                  'id':id
                 }
               ).then((value) =>    ToastMessage().toastmessage(message:'POSTED')).onError((error, stackTrace) =>    ToastMessage().toastmessage(message: error.toString()));
             },

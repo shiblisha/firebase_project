@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                               email: email.text, password: password.text)
                           .then((value) => {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext a) => Firestore())),
+                                    builder: (BuildContext a) => Home())),
                                 ToastMessage().toastmessage(message: 'welcome')
                               })
                           .onError((error, stackTrace) => ToastMessage()
@@ -112,6 +112,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+
                 SizedBox(
                   width: 30,
                 ),
