@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
               borderRadius: BorderRadius.circular(20), color: Colors.grey),
           child: TextButton(
             onPressed: (){
-              String id=DateTime.now().microsecondsSinceEpoch.toString();
+              String id=DateTime.now().millisecondsSinceEpoch.toString();
               ref.child(id).set(
                 {
                   'title':text1.text,

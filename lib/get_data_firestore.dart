@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_project/toastmessege.dart';
 import 'package:flutter/material.dart';
 
 class Get_firestore extends StatefulWidget {
@@ -9,107 +12,79 @@ class Get_firestore extends StatefulWidget {
 }
 
 TextEditingController update = TextEditingController();
-final ref = FirebaseDatabase.instance.ref('Texts');
+TextEditingController search = TextEditingController();
+final ref = FirebaseFirestore.instance.collection('Post1');
+final ref1 = FirebaseFirestore.instance.collection('Post1').snapshots();
 
 class _Get_firestoreState extends State<Get_firestore> {
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     var mheight = MediaQuery.of(context).size.height;
-     var mwidth = MediaQuery.of(context).size.width;
+    var mwidth = MediaQuery.of(context).size.width;
 
-     return Scaffold(
-//         body: Card(
-       //elevation: 3,
-//       child: ListTile(
-//           title: Text(snapshot.child('title').value.toString()),
-//           subtitle: Text(snapshot.child('title').value.toString()),
-//           leading: IconButton(
-//               onPressed: () {
-//                 showDialog(
-//                   context: context,
-//                   builder: (BuildContext context) {
-//                     return AlertDialog(
-//                       title: Text("Dialog Title"),
-//                       content: Container(
-//                         height: mheight * .05,
-//                         width: mwidth * .99,
-//                         decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(20),
-//                           color: Colors.grey,
-//                         ),
-//                         child: Padding(
-//                           padding: EdgeInsets.only(left: 10),
-//                           child: TextFormField(
-//                             controller: update,
-//                             decoration: InputDecoration(
-//                                 focusedBorder: InputBorder.none,
-//                                 disabledBorder: InputBorder.none,
-//                                 enabledBorder: InputBorder.none,
-//                                 hintText: 'New value',
-//                                 hintStyle: TextStyle(
-//                                     fontWeight: FontWeight.w900, fontSize: 15)),
-//                           ),
-//                         ),
-//                       ),
-//                       actions: [
-//                         GestureDetector(
-//                           child: Text("Update"),
-//                           onTap: () {
-//                             update.text =
-//                                 snapshot.child('title').value.toString();
-//                             ref
-//                                 .child(snapshot.child('id').toString())
-//                                 .update({'title': update.text})
-//                                 .then((value) => ToastMessage()
-//                                     .toastmessage(message: 'UPDATED'))
-//                                 .onError((error, stackTrace) => ToastMessage()
-//                                     .toastmessage(message: error.toString()));
-//                           },
-//                           // },
-//                         ),
-//                         GestureDetector(
-//                           child: Text("Close"),
-//                           onTap: () {
-//                             Navigator.of(context).pop();
-//                           },
-//                         ),
-//                       ],
-//                     );
-//                   },
-//                 );
-//               },
-//               icon: Icon(Icons.update)),
-//           trailing: IconButton(
-//               onPressed: () {
-//                 Dialogbox(
-//                     Id: snapshot.child('id').toString(),
-//                     title: snapshot.child('title').toString());
-//               },
-//               icon: Icon(Icons.delete))),
-//     ));
-//   }
-//
-//   Future<void> Dialogbox({required String Id, required String title}) async {
-//     final newValue = TextEditingController();
-//     newValue.text = title;
-//     showDialog(
-//         context: context,
-//         builder: (BuildContext context) {
-//           return AlertDialog(
-//             title: Text('Update'),
-//             content: TextFormField(
-//               controller: newValue,
-//             ),
-//             actions: [
-//               TextButton(
-//                   onPressed: () {
-//                     ref
-//                         .child(Id)
-//                         .update({'title': newValue.text.toLowerCase()});
-//                   },
-//                   child: Text('Update'))
-//             ],
-             );
-//         });
+    return Scaffold(resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: TextFormField(
+            onFieldSubmitted: (value) {
+              setState(() {});
+            },
+            controller: search,
+            onChanged: (value) {
+              setState(() {});
+            },
+            decoration: InputDecoration(
+                focusedBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                hintText: 'Search',
+                hintStyle:
+                    TextStyle(fontWeight: FontWeight.w900, fontSize: 15)),
+          ),
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+          stream: ref1,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Text(
+                'error',
+                style: TextStyle(color: Colors.purple),
+              );
+            }
+            if (snapshot.hasData) {print(snapshot.data!.docs.length);
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(snapshot.data!.docs[index]['title'].toString()),
+                    leading: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Update',
+                          style: TextStyle(
+                            color: Colors.purple,
+                          ),
+                        )),
+                    trailing: TextButton(
+                        onPressed: () {
+
+                        },
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.purple,
+                          ),
+                        )),
+                  );
+                },
+              );
+            } else {
+              return Container();
+            }
+          },
+        ));
   }
 }

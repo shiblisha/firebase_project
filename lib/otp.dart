@@ -3,6 +3,8 @@ import 'package:firebase_project/home.dart';
 import 'package:firebase_project/toastmessege.dart';
 import 'package:flutter/material.dart';
 
+import 'firestore.dart';
+
 class Otp_form extends StatefulWidget {
   final verificationId;
   const Otp_form({Key? key,required this.verificationId}) : super(key: key);
@@ -65,7 +67,7 @@ class _Otp_formState extends State<Otp_form> {
                         smsCode: otp.text);
                     try{
                       await auth.signInWithCredential(credentials);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Home()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Firestore()));
                     }catch(e){
                       ToastMessage().toastmessage(message: e.toString());
                     }
