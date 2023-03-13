@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_project/home.dart';
 import 'package:firebase_project/toastmessege.dart';
+import 'package:firebase_project/upload_image.dart';
 import 'package:flutter/material.dart';
 
 import 'firestore.dart';
@@ -67,7 +67,7 @@ class _Otp_formState extends State<Otp_form> {
                         smsCode: otp.text);
                     try{
                       await auth.signInWithCredential(credentials);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Firestore()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Upload_image()));
                     }catch(e){
                       ToastMessage().toastmessage(message: e.toString());
                     }

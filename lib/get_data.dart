@@ -12,7 +12,7 @@ class Get_data extends StatefulWidget {
 
 TextEditingController update = TextEditingController();
 TextEditingController search = TextEditingController();
-final ref = FirebaseDatabase.instance.ref('Texts');
+final ref = FirebaseDatabase.instance.ref('Post');
 
 class _Get_dataState extends State<Get_data> {
   @override
