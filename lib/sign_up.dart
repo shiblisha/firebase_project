@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_project/phone_number.dart';
 import 'package:firebase_project/toastmessege.dart';
+import 'package:firebase_project/upload_image.dart';
 import 'package:flutter/material.dart';
 
 import 'Login.dart';
@@ -119,7 +120,7 @@ class _Sign_upState extends State<Sign_up> {
                         email: email.text, password: password.text)
                         .then((value) => {
 
-                          Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Home())),
+                          Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Upload_image())),
                       ToastMessage().toastmessage(message: 'Successfully registerd')
                     })
                         .onError((error, stackTrace) => ToastMessage()

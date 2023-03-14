@@ -101,7 +101,7 @@ class _Upload_imageState extends State<Upload_image> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20), color: Colors.grey),
                           child: TextButton(
-                            onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>Getall_images())),
+                            onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext a)=>See_All_Images())),
 
                             child: Text(
                               'Get All Images',style: TextStyle(
